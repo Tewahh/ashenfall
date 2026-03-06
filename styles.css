@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: monospace;
+  image-rendering: pixelated;
+}
+
+#game {
+  width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+}
+
+#scene {
+  border: 4px solid white;
+  padding: 20px;
+}
+
+#choices button {
+  display: block;
+  margin-top: 10px;
+}
+
+#map {
+  border: 4px solid white;
+  height: 200px;
+  padding: 10px;
+}
+
+.map-location {
+  cursor: pointer;
+  padding: 6px;
+}
+
+.map-location:hover {
+  background: white;
+  color: black;
+}
+
+#combat {
+  border: 4px solid red;
+  padding: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+#hud {
+  border: 4px solid white;
+  padding: 10px;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.flash {
+  animation: flash 0.2s;
+}
+
+@keyframes flash {
+  0% {
+    background: white;
+  }
+  100% {
+    background: transparent;
+  }
+}
