@@ -1,114 +1,14 @@
-/* =========================
-   ROOT
-========================= */
-:root {
-  --white: #e6e6e6;
-  --black: #1f2937;
-  --gray: #374151;
-}
-/* =========================
-   GLOBAL
-========================= */
-
 body {
-  margin: 0;
-  font-family: "Courier New", monospace;
-  background: #0b0f14;
-  color: var(--white);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* =========================
-   GAME LAYOUT
-========================= */
-
-#game {
-  width: 1000px;
-  display: grid;
-  grid-template-columns: 2.5fr 1fr;
-  gap: 20px;
-}
-
-/* =========================
-   PANELS
-========================= */
-
-#scene,
-#hud,
-#map,
-#combat {
-  background: #111827;
-  border: 2px solid var(--black);
-  padding: 16px;
-  border-radius: 8px;
-}
-
-/* =========================
-   DIALOGUE
-========================= */
-
-#dialogue {
-  min-height: 120px;
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-
-button {
-  background: var(--black);
-  color: var(--white);
-  border: 1px solid var(--gray);
-  padding: 8px 12px;
-  margin-top: 6px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: 0.2s;
-}
-
-button:hover {
-  background: var(--gray);
-}
-
-/* =========================
-   COMBAT
-========================= */
-
-#combat {
-  border-color: #7f1d1d;
+  font-family: sans-serif;
+  background: black;
+  color: white;
 }
 
 .hidden {
   display: none;
 }
 
-/* =========================
-   HUD
-========================= */
-
-#health {
-  color: #f87171;
-}
-
-#stats {
-  color: #93c5fd;
-}
-
-#inventory {
-  color: #fbbf24;
-}
-
-/* =========================
-   FADE TRANSITION
-========================= */
-
-.fade {
-  opacity: 0;
-  transition: opacity 0.25s ease;
+button {
+  margin: 5px;
+  padding: 8px;
 }

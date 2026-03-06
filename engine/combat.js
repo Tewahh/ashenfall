@@ -1,54 +1,93 @@
-import { enemies } from '../../data/enemies.js';
-import { state } from './state.js';
-
-let enemy;
+import { enemies } from "../data/enemies.js";
+import { state } from "./state.js";
+import { updateUI } from "./ui.js";
+import { checkEnding } from "./endingManager.js";
+import { addXP } from "./levelSystem.js";
 
 export function startCombat(name) {
-  enemy = { ...enemies[name] };
 
-  document.getElementById('combat').classList.remove('hidden');
+  state.combat.active = true;
+  state.combat.enemy = { ...enemies[name] };
 
-  updateCombat();
-  setupCombatButtons(); // <-- ADD THIS
+  document.getElementById("combat")
+    .classList.remove("hidden");
+
+  updateCombatUI();
+
 }
 
-function setupCombatButtons() {
-  const attackBtn = document.getElementById('attackBtn');
+function playerAttack() {
 
-  if (!attackBtn) {
-    console.error('Attack button not found!');
+  const enemy = state.combat.enemy;
+
+  enemy.hp -= state.player.attack;
+
+  if (enemy.hp <= 0) {
+    endCombat(true);
     return;
   }
 
-  attackBtn.onclick = () => {
-    enemy.hp -= state.attack;
-
-    if (enemy.hp <= 0) {
-      log('Enemy defeated');
-      endCombat();
-      return;
-    }
-
-    enemyTurn();
-    updateCombat();
-  };
-}
-
-function updateCombat() {
-  document.getElementById('enemy').textContent =
-    enemy.name + ' HP: ' + enemy.hp;
+  enemyTurn();
+  updateCombatUI();
 }
 
 function enemyTurn() {
-  let damage = Math.max(1, enemy.attack - state.defense);
-  state.health -= damage;
-  log(enemy.name + ' hits for ' + damage);
+
+  const enemy = state.combat.enemy;
+
+  const damage = Math.max(
+    1,
+    enemy.attack - state.player.defense
+  );
+
+  state.player.health -= damage;
+
+  if (state.player.health <= 0) {
+    endCombat(false);
+  }
+
 }
 
-function log(t) {
-  document.getElementById('combatLog').innerHTML += t + '<br>';
+function endCombat(victory) {
+
+  state.combat.active = false;
+
+  document.getElementById("combat")
+    .classList.add("hidden");
+
+  if (victory) {
+    addXP(5);
+    checkEnding();
+
+    if (state.player.xp >= state.player.xpToNext) {
+      levelUp();
+    }
+
+    checkEnding();
+  }
+
+  updateUI();
 }
 
-function endCombat() {
-  document.getElementById('combat').classList.add('hidden');
+function levelUp() {
+
+  state.player.level++;
+  state.player.xp = 0;
+  state.player.xpToNext *= 1.5;
+
+  state.player.maxHealth += 2;
+  state.player.attack += 1;
+
+  state.player.health = state.player.maxHealth;
+
 }
+
+function updateCombatUI() {
+
+  document.getElementById("enemy").textContent =
+    `${state.combat.enemy.name} HP: ${state.combat.enemy.hp}`;
+
+}
+
+document.getElementById("attackBtn")
+  .onclick = playerAttack;

@@ -1,21 +1,22 @@
 import { scenes } from "../data/scenes.js";
 import { state } from "./state.js";
-import { startCombat } from "./combatManager.js";
 import { updateUI } from "./ui.js";
+import { startCombat } from "./combat.js";
 
 export function loadScene(name) {
 
   const scene = scenes[name];
+  if (!scene) return;
 
   state.scene = name;
 
-  if (scene.onEnter) scene.onEnter(state);
-
-  document.getElementById("dialogue").textContent = scene.text;
+  document.getElementById("dialogue")
+    .textContent = scene.text;
 
   renderChoices(scene.choices);
 
-  updateUI(state);
+  updateUI();
+
 }
 
 function renderChoices(choices) {
@@ -30,9 +31,10 @@ function renderChoices(choices) {
 
     btn.onclick = () => {
 
-      if (choice.combat) startCombat(choice.combat);
-
-      else loadScene(choice.next);
+      if (choice.combat)
+        startCombat(choice.combat);
+      else if (choice.next)
+        loadScene(choice.next);
 
     };
 
