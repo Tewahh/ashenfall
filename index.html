@@ -1,42 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Ashenfall RPG</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>Ashenfall</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
 
-  <body>
-    <canvas id="fog"></canvas>
+<div id="game">
 
-    <div id="game">
-      <div id="scene">
-        <div id="dialogue"></div>
+  <div id="scene">
+    <div id="dialogue"></div>
+    <div id="choices"></div>
+  </div>
 
-        <div id="choices"></div>
-      </div>
+  <div id="combat" class="hidden">
+    <div id="enemy"></div>
+    <div id="combatLog"></div>
+    <button id="attackBtn">Attack</button>
+    <button id="runBtn">Run</button>
+  </div>
 
-      <div id="map"></div>
+  <div id="hud">
+    <div id="health"></div>
+    <div id="stats"></div>
+    <div id="inventory"></div>
+    <div id="quests"></div>
+  </div>
 
-      <div id="combat" class="hidden">
-        <div id="enemy"></div>
+</div>
 
-        <div id="combatLog"></div>
-
-        <div id="combatMenu">
-          <button id="attackBtn">Attack</button>
-          <button id="itemBtn">Item</button>
-          <button id="runBtn">Run</button>
-        </div>
-      </div>
-
-      <div id="hud">
-        <div id="health"></div>
-        <div id="stats"></div>
-        <div id="inventory"></div>
-      </div>
-    </div>
-
-    <script type="module" src="engine/main.js"></script>
-  </body>
+<script type="module" src="engine/main.js"></script>
+</body>
 </html>

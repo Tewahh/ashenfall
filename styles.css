@@ -1,75 +1,114 @@
+/* =========================
+   ROOT
+========================= */
+:root {
+  --white: #e6e6e6;
+  --black: #1f2937;
+  --gray: #374151;
+}
+/* =========================
+   GLOBAL
+========================= */
+
 body {
   margin: 0;
-  background: black;
-  color: white;
-  font-family: monospace;
-  image-rendering: pixelated;
+  font-family: "Courier New", monospace;
+  background: #0b0f14;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
 }
+
+/* =========================
+   GAME LAYOUT
+========================= */
 
 #game {
   width: 1000px;
-  margin: auto;
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 2.5fr 1fr;
   gap: 20px;
 }
 
-#scene {
-  border: 4px solid white;
-  padding: 20px;
+/* =========================
+   PANELS
+========================= */
+
+#scene,
+#hud,
+#map,
+#combat {
+  background: #111827;
+  border: 2px solid var(--black);
+  padding: 16px;
+  border-radius: 8px;
 }
 
-#choices button {
-  display: block;
-  margin-top: 10px;
+/* =========================
+   DIALOGUE
+========================= */
+
+#dialogue {
+  min-height: 120px;
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
 
-#map {
-  border: 4px solid white;
-  height: 200px;
-  padding: 10px;
-}
+/* =========================
+   BUTTONS
+========================= */
 
-.map-location {
+button {
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid var(--gray);
+  padding: 8px 12px;
+  margin-top: 6px;
   cursor: pointer;
-  padding: 6px;
+  border-radius: 4px;
+  transition: 0.2s;
 }
 
-.map-location:hover {
-  background: white;
-  color: black;
+button:hover {
+  background: var(--gray);
 }
+
+/* =========================
+   COMBAT
+========================= */
 
 #combat {
-  border: 4px solid red;
-  padding: 10px;
+  border-color: #7f1d1d;
 }
 
 .hidden {
   display: none;
 }
 
-#hud {
-  border: 4px solid white;
-  padding: 10px;
+/* =========================
+   HUD
+========================= */
+
+#health {
+  color: #f87171;
 }
 
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+#stats {
+  color: #93c5fd;
 }
 
-.flash {
-  animation: flash 0.2s;
+#inventory {
+  color: #fbbf24;
 }
 
-@keyframes flash {
-  0% {
-    background: white;
-  }
-  100% {
-    background: transparent;
-  }
+/* =========================
+   FADE TRANSITION
+========================= */
+
+.fade {
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }

@@ -1,12 +1,9 @@
 export const scenes = {
   intro: {
     text: `Ashenfall was once a kingdom powered by a sacred flame.
-
-When the flame died, the forest swallowed the land.
-
-Travelers vanish here.
-
-Yet you entered willingly.`,
+    When the flame died, the forest swallowed the land.
+    Travelers vanish here.
+    Yet you entered willingly.`,
     choices: [
       { text: 'Enter the forest', next: 'forestEntrance' },
       { text: 'Check your supplies', next: 'checkItems' },
@@ -28,6 +25,69 @@ Yet you entered willingly.`,
       { text: 'Walk into the deep forest', next: 'deepForest' },
       { text: 'Return to entrance', next: 'intro' },
     ],
+  },
+
+  forestDeep: {
+    text: `
+  The forest grows darker as you move forward.
+  
+  The trees twist unnaturally, forming narrow corridors of bark.
+  
+  You notice:
+  - Broken arrows in the ground
+  - Old campfire ashes
+  - Fresh footprints leading north
+  
+  Something is hunting here.
+  `,
+    choices: [
+      { text: "Follow the footprints", next: "wolfEncounter" },
+      { text: "Search the camp", next: "findPotion" },
+      { text: "Return to entrance", next: "intro" }
+    ]
+  },
+
+  findPotion: {
+    text: `
+  You find a half-buried satchel.
+  
+  Inside is a glowing Health Potion.
+  `,
+    effect: (state) => {
+      state.inventory.push("Health Potion");
+    },
+    choices: [
+      { text: "Continue", next: "forestDeep" }
+    ]
+  },
+
+  ruinedVillage: {
+    text: `
+  You discover a burned village.
+  
+  Doors hang open.
+  
+  Wind moves through empty homes.
+  
+  A survivor may still be here.
+  `,
+    choices: [
+      { text: "Enter house", next: "npcSurvivor" },
+      { text: "Search ruins", next: "findLargePotion" },
+      { text: "Leave", next: "map" }
+    ]
+  },
+
+  npcSurvivor: {
+    text: `
+  A frightened survivor hides inside.
+  
+  "Please... the beast comes at night."
+  `,
+    choices: [
+      { text: "Offer help", next: "questStart" },
+      { text: "Leave", next: "ruinedVillage" }
+    ]
   },
 
   road: {

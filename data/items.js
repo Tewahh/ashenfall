@@ -29,4 +29,15 @@ export const items = {
     type: 'key',
     description: 'Opens the temple gate',
   },
+
+  "Health Potion": {
+    type: "consumable",
+    heal: 5,
+    description: "Restores 5 health"
+  },
+
+  "Large Potion": {
+    type: "consumable",
+    heal: 10
+  }
 };

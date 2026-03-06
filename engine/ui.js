@@ -1,22 +1,23 @@
 import { state } from './state.js';
 
-export function updateUI() {
-  // 🔹 Health
-  const healthEl = document.getElementById('health');
+export function updateUI(state) {
 
-  healthEl.textContent = `Health: ${state.player.health} / ${state.player.maxHealth}`;
+  document.getElementById("health").textContent =
+    `Health: ${state.player.health}/${state.player.maxHealth}`;
 
-  // 🔹 Stats
-  const statsEl = document.getElementById('stats');
+  document.getElementById("stats").textContent =
+    `ATK:${state.player.attack} DEF:${state.player.defense}`;
 
-  statsEl.textContent = `ATK: ${state.player.attack} | DEF: ${state.player.defense}`;
+  document.getElementById("inventory").textContent =
+    state.inventory.join(", ") || "Empty";
 
-  // 🔹 Inventory
-  const inventoryEl = document.getElementById('inventory');
+  const questText = Object.keys(state.quests)
+    .map(q => `${q}: ${state.quests[q].completed ? "Done" : "Active"}`)
+    .join(" | ");
 
-  inventoryEl.textContent =
-    'Inventory: ' +
-    (state.inventory.length ? state.inventory.join(', ') : 'Empty');
+  document.getElementById("quests").textContent =
+    questText || "No quests";
+
 }
 
 export function updateHUD(state) {

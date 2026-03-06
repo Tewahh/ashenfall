@@ -1,53 +1,75 @@
-import { state } from './state.js';
-import { enemies } from '../data/enemies.js';
-import { updateUI } from './ui.js';
+import { enemies } from "../data/enemies.js";
+import { state } from "./state.js";
+import { updateUI } from "./ui.js";
 
-let enemy = null;
-let playerTurn = true;
+export function startCombat(name) {
 
-export function startCombat(enemyName) {
-  enemy = { ...enemies[enemyName] };
-  playerTurn = true;
+  state.combat.active = true;
+  state.combat.enemy = { ...enemies[name] };
+  state.combat.turn = "player";
 
-  document.getElementById('combat').classList.remove('hidden');
+  document.getElementById("combat").classList.remove("hidden");
 
   updateCombatUI();
+
 }
 
 function playerAttack() {
-  if (!playerTurn) return;
+
+  if (!state.combat.active) return;
+  if (state.combat.turn !== "player") return;
+
+  const enemy = state.combat.enemy;
 
   enemy.hp -= state.player.attack;
-  playerTurn = false;
 
-  checkEnd();
-  if (enemy.hp > 0) enemyTurn();
-}
+  if (enemy.hp <= 0) return endCombat(true);
 
-function enemyTurn() {
-  const damage = Math.max(1, enemy.attack - state.player.defense);
+  state.combat.turn = "enemy";
+  enemyTurn();
 
-  state.player.health -= damage;
-
-  checkEnd();
-  playerTurn = true;
   updateCombatUI();
 }
 
-function checkEnd() {
-  if (enemy.hp <= 0) endCombat(true);
-  if (state.player.health <= 0) endCombat(false);
+function enemyTurn() {
+
+  const enemy = state.combat.enemy;
+
+  const damage = Math.max(
+    1,
+    enemy.attack - state.player.defense
+  );
+
+  state.player.health -= damage;
+
+  if (state.player.health <= 0)
+    return endCombat(false);
+
+  state.combat.turn = "player";
 }
 
 function endCombat(victory) {
-  document.getElementById('combat').classList.add('hidden');
-  updateUI();
+
+  state.combat.active = false;
+
+  document.getElementById("combat").classList.add("hidden");
+
+  if (!victory) {
+    state.player.health = state.player.maxHealth;
+  }
+
+  updateUI(state);
 }
 
 function updateCombatUI() {
-  document.getElementById(
-    'enemy'
-  ).textContent = `${enemy.name} HP: ${enemy.hp}`;
+  document.getElementById("enemy").textContent =
+    state.combat.enemy.name +
+    " HP: " +
+    state.combat.enemy.hp;
 }
 
-document.getElementById('attackBtn').onclick = playerAttack;
+document.getElementById("attackBtn").onclick = playerAttack;
+
+document.getElementById("runBtn").onclick = () => {
+  document.getElementById("combat").classList.add("hidden");
+};
