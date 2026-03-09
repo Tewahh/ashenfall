@@ -1,7 +1,7 @@
-import { scenes } from "../data/scenes.js";
-import { state } from "./state.js";
-import { updateUI } from "./ui.js";
-import { startCombat } from "./combat.js";
+import { scenes } from "../../data/scenes.js";
+import { state } from "../state.js";
+import { updateUI } from "../ui.js";
+import { startCombat } from "../combat/combat.js";
 
 export function loadScene(name) {
 

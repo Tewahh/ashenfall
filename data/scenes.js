@@ -1,7 +1,7 @@
-import { unlockLocation, renderMap } from "../engine/mapSystem.js";
-import { enterDungeon } from "../engine/dungeonGenerator.js";
-import { addItem } from "../engine/inventorySystem.js";
-import { generateLoot } from "../engine/lootGenerator.js";
+import { unlockLocation, renderMap } from "../engine/systems/mapSystem.js";
+import { enterDungeon } from "../engine/generator/dungeonGenerator.js";
+import { addItem } from "../engine/systems/inventorySystem.js";
+import { generateLoot } from "../engine/generator/lootGenerator.js";
 
 export const scenes = {
 

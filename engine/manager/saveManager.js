@@ -1,4 +1,4 @@
-import { state } from "./state.js";
+import { state } from "../state.js";
 
 const SAVE_KEY = "rpg_save";
 
@@ -24,6 +24,11 @@ export function loadGame() {
 
   return true;
 }
+
+// Auto-save every 60s
+setInterval(() => {
+  localStorage.setItem("rpg_autoSave", JSON.stringify(state));
+}, 60000);
 
 export function deleteSave() {
   localStorage.removeItem(SAVE_KEY);

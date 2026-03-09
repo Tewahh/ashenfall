@@ -18,10 +18,7 @@
     </div>
 
     <div id="skills"></div>
-    <div id="inventory">
-      <h3>Inventory</h3>
-      <ul id="inventoryList"></ul>
-    </div>
+
 
     <div id="dialogue"></div>
     <div id="choices"></div>
@@ -35,6 +32,19 @@
     </script>
     <button onclick="resetGame()">Reset</button>
 
+    <script type="module" src="./engine/systems/inventorySystem.js"></script>
+    <script type="module">
+      import { renderInventory } from "./engine/systems/inventorySystem.js";
+    </script><div id="combatLog" style="height:150px; overflow-y:scroll; border:1px solid #333; margin-top:5px;"></div>
+    <div id="inventoryFilters">
+      <button onclick="renderInventory('all')">All</button>
+      <button onclick="renderInventory('weapon')">Weapons</button>
+      <button onclick="renderInventory('armor')">Armor</button>
+    </div>
+    <div id="inventory">
+      <h3>Inventory</h3>
+      <ul id="inventoryList"></ul>
+    </div>
     <div id="combat" class="hidden">
       <div id="enemy"></div>
       <button id="attackBtn">Attack</button>

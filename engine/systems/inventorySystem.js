@@ -1,5 +1,5 @@
-import { state } from "./state.js";
-import { updateUI } from "./ui.js";
+import { state } from "../state.js";
+import { updateUI } from "../ui.js";
 
 // Initialize inventory if not present
 if (!state.player.inventory) state.player.inventory = [];
@@ -19,12 +19,10 @@ export function removeItem(index) {
     updateUI();
 }
 
-// Equip an item
 export function equipItem(index) {
     const item = state.player.inventory[index];
     if (!item) return;
 
-    // Unequip previous item if same type
     if (item.type === "weapon" && state.player.equipment.weapon) {
         state.player.attack -= state.player.equipment.weapon.attack;
     }
@@ -32,7 +30,6 @@ export function equipItem(index) {
         state.player.defense -= state.player.equipment.armor.defense;
     }
 
-    // Equip new item
     if (item.type === "weapon") {
         state.player.equipment.weapon = item;
         state.player.attack += item.attack;
@@ -42,27 +39,31 @@ export function equipItem(index) {
         state.player.defense += item.defense;
     }
 
-    console.log(`Equipped: ${item.name}`);
     updateUI();
 }
 
 
 
-export function renderInventory() {
+
+export function renderInventory(filter = "all") {
     const container = document.getElementById("inventoryList");
     if (!container) return;
-  
     container.innerHTML = "";
-  
-    state.player.inventory.forEach((item, index) => {
-      const li = document.createElement("li");
-      li.textContent = `${item.name} ${item.attack ? "ATK+"+item.attack : ""}${item.defense ? " DEF+"+item.defense : ""}`;
-  
-      const equipBtn = document.createElement("button");
-      equipBtn.textContent = "Equip";
-      equipBtn.onclick = () => equipItem(index);
-  
-      li.appendChild(equipBtn);
-      container.appendChild(li);
+
+    const items = state.player.inventory.filter(item => filter === "all" || item.type === filter);
+
+    items.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} ${item.attack ? "ATK+" + item.attack : ""}${item.defense ? " DEF+" + item.defense : ""}`;
+        if (state.player.equipment.weapon === item) li.textContent += " (Equipped Weapon)";
+        if (state.player.equipment.armor === item) li.textContent += " (Equipped Armor)";
+
+        const equipBtn = document.createElement("button");
+        equipBtn.textContent = "Equip";
+        equipBtn.onclick = () => equipItem(index);
+
+        li.appendChild(equipBtn);
+        li.title = `Type: ${item.type}\nRarity: ${item.rarity || "Common"}`;
+        container.appendChild(li);
     });
-  }
+}

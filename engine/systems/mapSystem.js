@@ -1,5 +1,6 @@
-import { worldMap } from "../data/worldMap.js";
-import { loadScene } from "./sceneManager.js";
+import { worldMap } from "../../data/worldMap.js";
+import { loadScene } from "../manager/sceneManager.js";
+import { startCombat } from "../combat/combatSystem.js";
 
 export function renderMap() {
 
@@ -39,4 +40,18 @@ export function unlockLocation(id) {
         location.unlocked = true;
     }
 
+}
+
+export function travelTo(locationId) {
+    const loc = worldMap.find(l => l.id === locationId);
+    if (!loc || !loc.unlocked) return;
+
+    loadScene(loc.scene);
+
+    // Random encounters
+    if (Math.random() < (loc.encounterChance || 0.3)) {
+        const enemiesList = loc.possibleEnemies || ["wolf", "bandit"];
+        const chosen = enemiesList[Math.floor(Math.random() * enemiesList.length)];
+        startCombat([chosen]);
+    }
 }

@@ -1,13 +1,13 @@
-import { enemies } from "../data/enemies.js";
-import { state } from "./state.js";
-import { updateUI } from "./ui.js";
-import { checkEnding } from "./endingManager.js";
-import { addXP } from "./levelSystem.js";
-import { getEnemyDamage } from "./enemyAI.js";
-import { buildTurnQueue } from "./turnSystem.js";
-import { processEffects } from "./statusEffects.js";
-import { generateLoot } from "./lootGenerator.js";
-import { addItem } from "./inventorySystem.js";
+import { enemies } from "../../data/enemies.js";
+import { state } from "../state.js";
+import { updateUI } from "../ui.js";
+import { checkEnding } from "../manager/endingManager.js";
+import { addXP } from "../systems/levelSystem.js";
+import { getEnemyDamage } from "../enemyAI.js";
+import { buildTurnQueue } from "../systems/turnSystem.js";
+import { processEffects } from "../statusEffects.js";
+import { generateLoot } from "../generator/lootGenerator.js";
+import { addItem } from "../systems/inventorySystem.js";
 
 export function startCombat(name) {
 

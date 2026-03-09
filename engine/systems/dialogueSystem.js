@@ -1,4 +1,4 @@
-import { dialogue } from "../data/dialogue.js";
+import { dialogue } from "../../data/dialogue.js";
 
 export function startDialogue(npcId) {
 

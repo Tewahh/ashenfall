@@ -1,5 +1,5 @@
-import { state } from "./state.js";
-import { updateUI } from "./ui.js";
+import { state } from "../state.js";
+import { updateUI } from "../ui.js";
 
 export function addXP(amount) {
   state.player.xp += amount;
