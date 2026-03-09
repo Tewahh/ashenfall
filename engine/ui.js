@@ -1,4 +1,5 @@
 import { state } from "./state.js";
+import { renderInventory, equipItem } from "./inventorySystem.js";
 
 export function updateUI() {
 
@@ -11,4 +12,5 @@ export function updateUI() {
   document.getElementById("xp").textContent =
     `XP: ${state.player.xp}/${state.player.xpToNext}`;
 
+  renderInventory();
 }

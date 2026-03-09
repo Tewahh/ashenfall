@@ -10,13 +10,23 @@ export function loadScene(name) {
 
   state.scene = name;
 
-  document.getElementById("dialogue")
-    .textContent = scene.text;
+  // RUN SCENE EFFECT
+  if (scene.effect) {
 
-  renderChoices(scene.choices);
+    const result = scene.effect(state);
 
+    if (result?.combat) return startCombat(result.combat);
+    if (result?.next) return loadScene(result.next);
+
+  }
+
+  document.getElementById("dialogue").textContent =
+    scene.text;
+
+  if (scene.choices && scene.choices.length > 0) {
+    renderChoices(scene.choices);
+  }
   updateUI();
-
 }
 
 function renderChoices(choices) {

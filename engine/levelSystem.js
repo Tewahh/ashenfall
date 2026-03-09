@@ -22,6 +22,8 @@ function levelUp() {
   state.player.maxHealth += 2;
   state.player.attack += 1;
   state.player.defense += 1;
+  state.player.skillPoints =
+    (state.player.skillPoints || 0) + 1;
 
   state.player.health = state.player.maxHealth;
 

@@ -3,6 +3,11 @@ import { state } from "./state.js";
 import { updateUI } from "./ui.js";
 import { checkEnding } from "./endingManager.js";
 import { addXP } from "./levelSystem.js";
+import { getEnemyDamage } from "./enemyAI.js";
+import { buildTurnQueue } from "./turnSystem.js";
+import { processEffects } from "./statusEffects.js";
+import { generateLoot } from "./lootGenerator.js";
+import { addItem } from "./inventorySystem.js";
 
 export function startCombat(name) {
 
@@ -20,14 +25,35 @@ function playerAttack() {
 
   const enemy = state.combat.enemy;
 
-  enemy.hp -= state.player.attack;
+  const queue = buildTurnQueue(state.player, enemy);
 
-  if (enemy.hp <= 0) {
-    endCombat(true);
-    return;
-  }
+  queue.forEach(turn => {
 
-  enemyTurn();
+    if (turn.type === "player") {
+
+      enemy.hp -= state.player.attack;
+
+      if (enemy.hp <= 0) {
+        endCombat(true);
+        return;
+      }
+
+    } else {
+
+      processEffects(state.player);
+
+      const damage = getEnemyDamage(enemy, state.player);
+      state.player.health -= damage;
+
+      if (state.player.health <= 0) {
+        endCombat(false);
+        return;
+      }
+
+    }
+
+  });
+
   updateCombatUI();
 }
 
@@ -35,9 +61,9 @@ function enemyTurn() {
 
   const enemy = state.combat.enemy;
 
-  const damage = Math.max(
-    1,
-    enemy.attack - state.player.defense
+  const damage = getEnemyDamage(
+    enemy,
+    state.player
   );
 
   state.player.health -= damage;
@@ -57,15 +83,22 @@ function endCombat(victory) {
 
   if (victory) {
     addXP(5);
-    checkEnding();
 
-    if (state.player.xp >= state.player.xpToNext) {
+    if (state.player.xy >= state.player.xpToNext) {
       levelUp();
     }
 
-    checkEnding();
-  }
+    const loot = generateLoot();
 
+    addItem(loot);
+
+    console.log("You found:", loot.name);
+
+    addXP(5);
+
+    checkEnding();
+
+  }
   updateUI();
 }
 
